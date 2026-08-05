@@ -29,6 +29,18 @@ class PhaseConsole < Formula
     libexec.install Dir["*"]
     cd libexec do
       system "npm", "install", *std_npm_args(prefix: false), "--omit=dev"
+      # std_npm_args ignores install scripts. macOS is covered by node-pty's
+      # shipped prebuilds, but no Linux prebuilds exist — compile it here with
+      # the host toolchain Homebrew/Linux already requires. Tolerated on
+      # failure: without the native module the console runs and the Terminal
+      # page degrades honestly.
+      if OS.linux?
+        begin
+          system "npm", "rebuild", "node-pty"
+        rescue BuildError
+          opoo "node-pty did not compile — the console will run without the Terminal page"
+        end
+      end
     end
     # An exec script rather than a symlink: it pins Homebrew's node, and hands
     # the shim the upgrade-stable opt_libexec path — so anything the console

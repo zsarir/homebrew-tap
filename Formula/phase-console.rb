@@ -22,17 +22,20 @@ class PhaseConsole < Formula
     # two optionalDependencies (node-pty, ws); if the native build is skipped,
     # the console degrades honestly (no Terminal page) rather than failing.
     # NOTE: the package's build lives in `prepack`, not `prepare`, precisely so
-    # this install step cannot re-trigger it.
+    # this install step cannot re-trigger it. `std_npm_args` is refused for the
+    # same reason: it installs the CURRENT tree as a package, which re-packs it
+    # and fires `prepack` — a client rebuild inside the sandbox, with no
+    # devDependencies to do it with.
     libexec.install Dir["*"]
     cd libexec do
-      system "npm", "install", "--omit=dev", "--no-audit", "--no-fund"
+      system "npm", "install", "--omit=dev", "--no-audit", "--no-fund" # rubocop:disable FormulaAudit/StdNpmArgs
     end
     # An exec script rather than a symlink: it pins Homebrew's node, and hands
     # the shim the upgrade-stable opt_libexec path — so anything the console
     # writes down (launchd plists) survives `brew upgrade`'s Cellar rename.
     (bin/"phase-console").write <<~SH
       #!/bin/bash
-      exec "#{Formula["node"].opt_bin}/node" "#{opt_libexec}/bin/phase-console.mjs" "$@"
+      exec "#{formula_opt_bin("node")}/node" "#{opt_libexec}/bin/phase-console.mjs" "$@"
     SH
   end
 

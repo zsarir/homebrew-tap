@@ -1,10 +1,10 @@
 class PhaseConsole < Formula
   desc "Local web console for the phased-execution Claude Code skill"
   homepage "https://github.com/zsarir/phased-execution"
-  url "https://registry.npmjs.org/phase-console/-/phase-console-1.0.1.tgz"
+  url "https://registry.npmjs.org/phase-console/-/phase-console-1.1.0.tgz"
   # The shasum -a 256 of the tarball AS SERVED BY THE REGISTRY — never of a
   # locally packed one. The release workflow (or a hand-run of its curl) bumps it.
-  sha256 "4d7ef5fbfc72b7a9199f0144e1b521c6469a8ac9564110cc74671e2e2260f306"
+  sha256 "3ea0588ff17eff6554b01971e297586f7425353980e875b662d12abf43095793"
   license "MIT"
 
   livecheck do

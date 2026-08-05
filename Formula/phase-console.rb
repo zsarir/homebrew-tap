@@ -18,17 +18,17 @@ class PhaseConsole < Formula
 
   def install
     # The tarball ships the whole skill tree with the client prebuilt and the
-    # server pre-stripped to .js. `npm install --omit=dev` resolves only the
-    # two optionalDependencies (node-pty, ws); if the native build is skipped,
-    # the console degrades honestly (no Terminal page) rather than failing.
-    # NOTE: the package's build lives in `prepack`, not `prepare`, precisely so
-    # this install step cannot re-trigger it. `std_npm_args` is refused for the
-    # same reason: it installs the CURRENT tree as a package, which re-packs it
-    # and fires `prepack` — a client rebuild inside the sandbox, with no
-    # devDependencies to do it with.
+    # server pre-stripped to .js, so this is a LOCAL install (prefix: false) in
+    # libexec: it only resolves the two optionalDependencies (node-pty, ws).
+    # The global form would re-pack the tree as a package instead — and the
+    # package's build lives in `prepack` precisely so installs cannot fire it.
+    # `--ignore-scripts` (part of std_npm_args) is fine: node-pty ships
+    # prebuilds its loader resolves at require time, and if that native load
+    # ever fails the console degrades honestly (no Terminal page) rather than
+    # failing here.
     libexec.install Dir["*"]
     cd libexec do
-      system "npm", "install", "--omit=dev", "--no-audit", "--no-fund" # rubocop:disable FormulaAudit/StdNpmArgs
+      system "npm", "install", *std_npm_args(prefix: false), "--omit=dev"
     end
     # An exec script rather than a symlink: it pins Homebrew's node, and hands
     # the shim the upgrade-stable opt_libexec path — so anything the console

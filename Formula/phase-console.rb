@@ -7,6 +7,9 @@ class PhaseConsole < Formula
   sha256 "622d9545d5a94d6bb97b9f8ff7d1eed67df288ff3c0b5b3db24d8daafd0ec369"
   license "MIT"
 
+  # Withdrawn: the console is distributed from its GitHub repositories only.
+  deprecate! date: "2026-09-03", because: "phase-console is distributed from its GitHub repositories only: https://github.com/zsarir/phased-execution#install"
+
   livecheck do
     url "https://registry.npmjs.org/phase-console/latest"
     strategy :json do |json|

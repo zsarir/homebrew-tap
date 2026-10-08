@@ -1,12 +1,12 @@
-# phase-console-pro 6.1.0. Written by the publish script from its formula
+# phase-console-pro 6.2.0. Written by the publish script from its formula
 # template on every release: edit the template, never this file.
 class PhaseConsolePro < Formula
   desc "Local web console and autopilot for the phased-execution Claude Code skill"
   homepage "https://phase-console-site.vercel.app"
-  url "https://registry.npmjs.org/phase-console-pro/-/phase-console-pro-6.1.0.tgz"
+  url "https://registry.npmjs.org/phase-console-pro/-/phase-console-pro-6.2.0.tgz"
   # The shasum -a 256 of the tarball AS THE REGISTRY SERVES IT, read back after
   # the publish — never of a locally packed one.
-  sha256 "0cd2bcf0770ed10ae2385248756d5fd1cc9fd28c2b32432582363713dc0e6cc2"
+  sha256 "ff3283e7d5d44565b2e642a806fa07bfe60165472777edf3f6b05e28298dab82"
   license :cannot_represent
 
   livecheck do
